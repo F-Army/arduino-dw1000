@@ -73,12 +73,39 @@ boolean    DW1000Class::_debounceClockEnabled = false;
 // modes of operation
 // TODO use enum external, not config array
 // this declaration is needed to make variables accessible while runtime from external code
+
+/* Based on chapter 9.3 of DW1000 Manual */
+constexpr byte DW1000Class::MODE_SHORTRANGE_LOWPRF_SHORTPREAMBLE[];
+constexpr byte DW1000Class::MODE_SHORTRANGE_HIGHPRF_SHORTPREAMBLE[];
+constexpr byte DW1000Class::MODE_SHORTRANGE_LOWPRF_MEDIUMPREAMBLE[];
+constexpr byte DW1000Class::MODE_SHORTRANGE_HIGHPRF_MEDIUMPREAMBLE[];
+constexpr byte DW1000Class::MODE_SHORTRANGE_LOWPRF_LONGPREAMBLE[];
+constexpr byte DW1000Class::MODE_SHORTRANGE_HIGHPRF_LONGPREAMBLE[];
+
+constexpr byte DW1000Class::MODE_MEDIUMRANGE_LOWPRF_SHORTPREAMBLE[];
+constexpr byte DW1000Class::MODE_MEDIUMRANGE_HIGHPRF_SHORTPREAMBLE[];
+constexpr byte DW1000Class::MODE_MEDIUMRANGE_LOWPRF_MEDIUMPREAMBLE[];
+constexpr byte DW1000Class::MODE_MEDIUMRANGE_HIGHPRF_MEDIUMPREAMBLE[];
+constexpr byte DW1000Class::MODE_MEDIUMRANGE_LOWPRF_LONGPREAMBLE[];
+constexpr byte DW1000Class::MODE_MEDIUMRANGE_HIGHPRF_LONGPREAMBLE[];
+
+constexpr byte DW1000Class::MODE_LONGRANGE_LOWPRF_SHORTPREAMBLE[];
+constexpr byte DW1000Class::MODE_LONGRANGE_HIGHPRF_SHORTPREAMBLE[];
+
+/* WARNING: They do not work on some tests */
+//constexpr byte DW1000Class::MODE_LONGRANGE_LOWPRF_LONGPREAMBLE[];
+//constexpr byte DW1000Class::MODE_LONGRANGE_HIGHPRF_LONGPREAMBLE[];
+
+
+/* Pre-defined by author */
 constexpr byte DW1000Class::MODE_LONGDATA_RANGE_LOWPOWER[];
 constexpr byte DW1000Class::MODE_SHORTDATA_FAST_LOWPOWER[];
-constexpr byte DW1000Class::MODE_LONGDATA_FAST_LOWPOWER[];
 constexpr byte DW1000Class::MODE_SHORTDATA_FAST_ACCURACY[];
-constexpr byte DW1000Class::MODE_LONGDATA_FAST_ACCURACY[];
 constexpr byte DW1000Class::MODE_LONGDATA_RANGE_ACCURACY[];
+// Not recommended
+constexpr byte DW1000Class::MODE_LONGDATA_FAST_LOWPOWER[];
+constexpr byte DW1000Class::MODE_LONGDATA_FAST_ACCURACY[];
+
 /*
 const byte DW1000Class::MODE_LONGDATA_RANGE_LOWPOWER[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_2048};
 const byte DW1000Class::MODE_SHORTDATA_FAST_LOWPOWER[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_128};
@@ -335,14 +362,6 @@ void DW1000Class::enableMode(const byte mode[]) {
 	setDataRate(mode[0]);
 	setPulseFrequency(mode[1]);
 	setPreambleLength(mode[2]);
-	// TODO add channel and code to mode tuples
-	// TODO add channel and code settings with checks (see Table 58)
-	setChannel(CHANNEL_5);
-	if(mode[1] == TX_PULSE_FREQ_16MHZ) {
-		setPreambleCode(PREAMBLE_CODE_16MHZ_4);
-	} else {
-		setPreambleCode(PREAMBLE_CODE_64MHZ_10);
-	}
 }
 
 void DW1000Class::tune() {
@@ -1095,7 +1114,6 @@ void DW1000Class::commitConfiguration() {
 		_antennaCalibrated = true;
 	} // Compatibility with old versions.
 	_antennaDelay.getTimestamp(antennaDelayBytes);
-
 	writeBytes(TX_ANTD, NO_SUB, antennaDelayBytes, LEN_TX_ANTD);
 	writeBytes(LDE_IF, LDE_RXANTD_SUB, antennaDelayBytes, LEN_LDE_RXANTD);
 }
@@ -1152,10 +1170,14 @@ void DW1000Class::setDataRate(byte rate) {
 		setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, false);
 		setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, false);
 		setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, false);
-	} else {
+	} else if (rate == TRX_RATE_850KBPS) {
 		setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, true);
 		setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, true);
 		setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, true);
+	} else {
+		setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, true);
+		setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, false);
+		setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, false);
 	}
 	byte sfdLength;
 	if(rate == TRX_RATE_6800KBPS) {
@@ -1186,15 +1208,27 @@ void DW1000Class::setPreambleLength(byte prealen) {
 	prealen &= 0x0F;
 	_txfctrl[2] &= 0xC3;
 	_txfctrl[2] |= (byte)((prealen << 2) & 0xFF);
-	if(prealen == TX_PREAMBLE_LEN_64 || prealen == TX_PREAMBLE_LEN_128) {
-		_pacSize = PAC_SIZE_8;
-	} else if(prealen == TX_PREAMBLE_LEN_256 || prealen == TX_PREAMBLE_LEN_512) {
-		_pacSize = PAC_SIZE_16;
-	} else if(prealen == TX_PREAMBLE_LEN_1024) {
-		_pacSize = PAC_SIZE_32;
-	} else {
-		_pacSize = PAC_SIZE_64;
+	
+	switch(prealen) {
+		case TX_PREAMBLE_LEN_64:
+			_pacSize = PAC_SIZE_8;
+			break;
+		case TX_PREAMBLE_LEN_128:
+			_pacSize = PAC_SIZE_8;
+			break;
+		case TX_PREAMBLE_LEN_256:
+			_pacSize = PAC_SIZE_16;
+			break;
+		case TX_PREAMBLE_LEN_512:
+			_pacSize = PAC_SIZE_16;
+			break;
+		case TX_PREAMBLE_LEN_1024:
+			_pacSize = PAC_SIZE_32;
+			break;
+		default:
+			_pacSize = PAC_SIZE_64; // In case of 1536, 2048 or 4096 preamble length.
 	}
+	
 	_preambleLength = prealen;
 }
 
@@ -1229,11 +1263,7 @@ void DW1000Class::setPreambleCode(byte preacode) {
 }
 
 void DW1000Class::setDefaults() {
-	if(_deviceMode == TX_MODE) {
-		
-	} else if(_deviceMode == RX_MODE) {
-		
-	} else if(_deviceMode == IDLE_MODE) {
+	 if(_deviceMode == IDLE_MODE) {
 		useExtendedFrameLength(false);
 		useSmartPower(false);
 		suppressFrameCheck(false);
@@ -1258,6 +1288,15 @@ void DW1000Class::setDefaults() {
 		// default mode when powering up the chip
 		// still explicitly selected for later tuning
 		enableMode(MODE_LONGDATA_RANGE_LOWPOWER);
+		
+		// TODO add channel and code to mode tuples
+	    // TODO add channel and code settings with checks (see DW1000 user manual 10.5 table 61)/
+	    setChannel(CHANNEL_5);
+		if(getPulseFrequency() == TX_PULSE_FREQ_16MHZ) {
+			setPreambleCode(PREAMBLE_CODE_16MHZ_4);
+		} else {
+			setPreambleCode(PREAMBLE_CODE_64MHZ_10);
+		}
 	}
 }
 
