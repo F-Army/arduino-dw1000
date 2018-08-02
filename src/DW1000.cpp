@@ -597,7 +597,8 @@ void DW1000Class::tune() {
 	} else {
 		// TODO proper error/warning handling
 	}
-	// TX_POWER (enabled smart transmit power control)
+	/* TX_POWER (enabled smart transmit power control) - reg:0x1E, tables 19-20
+	 * These values are based on a typical IC and an assumed IC to antenna loss of 1.5 dB with a 0 dBi antenna */
 	if(_channel == CHANNEL_1 || _channel == CHANNEL_2) {
 		if(_pulseFrequency == TX_PULSE_FREQ_16MHZ) {
 			if(_smartPower) {
