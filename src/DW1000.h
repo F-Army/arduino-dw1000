@@ -485,7 +485,7 @@ public:
 	// TODO is implemented, but needs testing
 	static void waitForResponse(boolean val);
 	
-	/* tuning according to mode. */
+	/* tuning according to mode.(Very important) */
 	static void tune();
 	
 	/* device status flags */
