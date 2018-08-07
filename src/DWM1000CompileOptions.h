@@ -19,8 +19,7 @@
  * 
  */
 
-#ifndef DWM1000COMPILEOPTIONS_H
-#define DWM1000COMPILEOPTIONS_H
+#pragma once
 
 /**
  * Printable DWM1000Time object costs about: rom: 490 byte ; ram: 58 byte
@@ -29,5 +28,3 @@
  * Set false if you do not need it and have to save some space
  */
 #define DWM1000TIME_H_PRINTABLE true
-
-#endif // DWM1000COMPILEOPTIONS_H

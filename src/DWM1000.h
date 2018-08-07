@@ -19,8 +19,7 @@
  * Arduino driver library (header file) for the Decawave DWM1000 UWB transceiver Module.
  */
 
-#ifndef _DWM1000_H_INCLUDED
-#define _DWM1000_H_INCLUDED
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -595,5 +594,3 @@ public:
 };
 
 extern DWM1000Class DWM1000;
-
-#endif
