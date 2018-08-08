@@ -20,6 +20,7 @@
  */
 
 #include "DWM1000Utils.h"
+#include "DWM1000Constants.h"
 #include "DWM1000.h"
 
 DWM1000Class DWM1000;
@@ -75,28 +76,6 @@ boolean    DWM1000Class::_debounceClockEnabled = false;
 // modes of operation
 // TODO use enum external, not config array
 // this declaration is needed to make variables accessible while runtime from external code
-
-/* Based on chapter 9.3 of DWM1000 Manual */
-constexpr byte DWM1000Class::MODE_SHORTRANGE_LOWPRF_SHORTPREAMBLE[];
-constexpr byte DWM1000Class::MODE_SHORTRANGE_HIGHPRF_SHORTPREAMBLE[];
-constexpr byte DWM1000Class::MODE_SHORTRANGE_LOWPRF_MEDIUMPREAMBLE[];
-constexpr byte DWM1000Class::MODE_SHORTRANGE_HIGHPRF_MEDIUMPREAMBLE[];
-constexpr byte DWM1000Class::MODE_SHORTRANGE_LOWPRF_LONGPREAMBLE[];
-constexpr byte DWM1000Class::MODE_SHORTRANGE_HIGHPRF_LONGPREAMBLE[];
-
-constexpr byte DWM1000Class::MODE_MEDIUMRANGE_LOWPRF_SHORTPREAMBLE[];
-constexpr byte DWM1000Class::MODE_MEDIUMRANGE_HIGHPRF_SHORTPREAMBLE[];
-constexpr byte DWM1000Class::MODE_MEDIUMRANGE_LOWPRF_MEDIUMPREAMBLE[];
-constexpr byte DWM1000Class::MODE_MEDIUMRANGE_HIGHPRF_MEDIUMPREAMBLE[];
-constexpr byte DWM1000Class::MODE_MEDIUMRANGE_LOWPRF_LONGPREAMBLE[];
-constexpr byte DWM1000Class::MODE_MEDIUMRANGE_HIGHPRF_LONGPREAMBLE[];
-
-constexpr byte DWM1000Class::MODE_LONGRANGE_LOWPRF_SHORTPREAMBLE[];
-constexpr byte DWM1000Class::MODE_LONGRANGE_HIGHPRF_SHORTPREAMBLE[];
-
-/* WARNING: They do not work on some tests */
-//constexpr byte DWM1000Class::MODE_LONGRANGE_LOWPRF_LONGPREAMBLE[];
-//constexpr byte DWM1000Class::MODE_LONGRANGE_HIGHPRF_LONGPREAMBLE[];
 
 /*
 const byte DWM1000Class::MODE_LONGDATA_RANGE_LOWPOWER[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_2048};
