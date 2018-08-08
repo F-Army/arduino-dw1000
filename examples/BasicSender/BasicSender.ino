@@ -50,7 +50,7 @@ void setup() {
   DWM1000.setDefaults();
   DWM1000.setDeviceAddress(5);
   DWM1000.setNetworkId(10);
-  DWM1000.enableMode(DWM1000.MODE_LONGDATA_RANGE_LOWPOWER);
+  DWM1000.enableMode(DWM1000.MODE_LONGRANGE_LOWPRF_SHORTPREAMBLE);
   DWM1000.commitConfiguration();
   Serial.println(F("Committed configuration ..."));
   // DEBUG chip info and registers pretty printed

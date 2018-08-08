@@ -98,16 +98,6 @@ constexpr byte DWM1000Class::MODE_LONGRANGE_HIGHPRF_SHORTPREAMBLE[];
 //constexpr byte DWM1000Class::MODE_LONGRANGE_LOWPRF_LONGPREAMBLE[];
 //constexpr byte DWM1000Class::MODE_LONGRANGE_HIGHPRF_LONGPREAMBLE[];
 
-
-/* Pre-defined by author */
-constexpr byte DWM1000Class::MODE_LONGDATA_RANGE_LOWPOWER[];
-constexpr byte DWM1000Class::MODE_SHORTDATA_FAST_LOWPOWER[];
-constexpr byte DWM1000Class::MODE_SHORTDATA_FAST_ACCURACY[];
-constexpr byte DWM1000Class::MODE_LONGDATA_RANGE_ACCURACY[];
-// Not recommended
-constexpr byte DWM1000Class::MODE_LONGDATA_FAST_LOWPOWER[];
-constexpr byte DWM1000Class::MODE_LONGDATA_FAST_ACCURACY[];
-
 /*
 const byte DWM1000Class::MODE_LONGDATA_RANGE_LOWPOWER[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_2048};
 const byte DWM1000Class::MODE_SHORTDATA_FAST_LOWPOWER[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_128};
@@ -1316,7 +1306,7 @@ void DWM1000Class::setDefaults() {
 		setReceiverAutoReenable(true);
 		// default mode when powering up the chip
 		// still explicitly selected for later tuning
-		enableMode(MODE_LONGDATA_RANGE_LOWPOWER);
+		enableMode(MODE_LONGRANGE_LOWPRF_SHORTPREAMBLE);
 		
 		// TODO add channel and code to mode tuples
 	    // TODO add channel and code settings with checks (see DWM1000 user manual 10.5 table 61)/
