@@ -906,28 +906,6 @@ void DWM1000Class::setDeviceAddress(uint16_t val) {
 	_networkAndAddress[1] = (byte)((val >> 8) & 0xFF);
 }
 
-uint8_t DWM1000Class::nibbleFromChar(char c) {
-	if(c >= '0' && c <= '9') {
-		return c-'0';
-	}
-	if(c >= 'a' && c <= 'f') {
-		return c-'a'+10;
-	}
-	if(c >= 'A' && c <= 'F') {
-		return c-'A'+10;
-	}
-	return 255;
-}
-
-void DWM1000Class::convertToByte(char string[], byte* bytes) {
-	byte    eui_byte[LEN_EUI];
-	// we fill it with the char array under the form of "AA:FF:1C:...."
-	for(uint16_t i = 0; i < LEN_EUI; i++) {
-		eui_byte[i] = (nibbleFromChar(string[i*3]) << 4)+nibbleFromChar(string[i*3+1]);
-	}
-	memcpy(bytes, eui_byte, LEN_EUI);
-}
-
 void DWM1000Class::getTempAndVbat(float& temp, float& vbat) {
 	// follow the procedure from section 6.4 of the User Manual
 	byte step1 = 0x80; writeBytes(RF_CONF, 0x11, &step1, 1);
@@ -945,7 +923,7 @@ void DWM1000Class::getTempAndVbat(float& temp, float& vbat) {
 
 void DWM1000Class::setEUI(char eui[]) {
 	byte eui_byte[LEN_EUI];
-	convertToByte(eui, eui_byte);
+	DWM1000Utils::convertToByte(eui, eui_byte);
 	setEUI(eui_byte);
 }
 
