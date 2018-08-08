@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2018 by Michele Biondi <michelebiondi01@gmail.com>, Andrea Salvatori <andrea.salvatori92@gmail.com>
  * Copyright (c) 2015 by Thomas Trojer <thomas@trojer.net>
  * Decawave DWM1000 library for arduino.
  *
