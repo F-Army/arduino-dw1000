@@ -311,63 +311,63 @@ constexpr byte PREAMBLE_CODE_64MHZ_19 = 19;
 constexpr byte PREAMBLE_CODE_64MHZ_20 = 20;
 
 /* transmission/reception bit rate (TXBR) - reg:0x08, bits:14,13 */
-static constexpr byte TRX_RATE_110KBPS  = 0x00;
-static constexpr byte TRX_RATE_850KBPS  = 0x01;
-static constexpr byte TRX_RATE_6800KBPS = 0x02;
+constexpr byte TRX_RATE_110KBPS  = 0x00;
+constexpr byte TRX_RATE_850KBPS  = 0x01;
+constexpr byte TRX_RATE_6800KBPS = 0x02;
 
 /* transmission pulse frequency (TXPRF) - reg:0x08, bits:17,16
 * 0x00 is 4MHZ, but receiver in DWM1000 does not support it (!??) */
-static constexpr byte TX_PULSE_FREQ_16MHZ = 0x01;
-static constexpr byte TX_PULSE_FREQ_64MHZ = 0x02;
+constexpr byte TX_PULSE_FREQ_16MHZ = 0x01;
+constexpr byte TX_PULSE_FREQ_64MHZ = 0x02;
 
 /* preamble length (PE + TXPSR) - reg:0x08, bits:21,20,19,18 - table 16 */
-static constexpr byte TX_PREAMBLE_LEN_64   = 0x01;
-static constexpr byte TX_PREAMBLE_LEN_128  = 0x05;
-static constexpr byte TX_PREAMBLE_LEN_256  = 0x09;
-static constexpr byte TX_PREAMBLE_LEN_512  = 0x0D;
-static constexpr byte TX_PREAMBLE_LEN_1024 = 0x02;
-static constexpr byte TX_PREAMBLE_LEN_1536 = 0x06;
-static constexpr byte TX_PREAMBLE_LEN_2048 = 0x0A;
-static constexpr byte TX_PREAMBLE_LEN_4096 = 0x03;
+constexpr byte TX_PREAMBLE_LEN_64   = 0x01;
+constexpr byte TX_PREAMBLE_LEN_128  = 0x05;
+constexpr byte TX_PREAMBLE_LEN_256  = 0x09;
+constexpr byte TX_PREAMBLE_LEN_512  = 0x0D;
+constexpr byte TX_PREAMBLE_LEN_1024 = 0x02;
+constexpr byte TX_PREAMBLE_LEN_1536 = 0x06;
+constexpr byte TX_PREAMBLE_LEN_2048 = 0x0A;
+constexpr byte TX_PREAMBLE_LEN_4096 = 0x03;
 
 /* PAC size (DRX_TUNE2) - reg:0x08, sub-reg:0x27, bits:26,25 - table 33
 * The value to program the sub-register changes in based of RXPRF */
-static constexpr byte PAC_SIZE_8  = 8;
-static constexpr byte PAC_SIZE_16 = 16;
-static constexpr byte PAC_SIZE_32 = 32;
-static constexpr byte PAC_SIZE_64 = 64;
+constexpr byte PAC_SIZE_8  = 8;
+constexpr byte PAC_SIZE_16 = 16;
+constexpr byte PAC_SIZE_32 = 32;
+constexpr byte PAC_SIZE_64 = 64;
 
 /* channel of operation (CHAN_CTRL - TX & RX _CHAN) - reg:0x1F, bits:3-0,7-4 */
-static constexpr byte CHANNEL_1 = 1;
-static constexpr byte CHANNEL_2 = 2;
-static constexpr byte CHANNEL_3 = 3;
-static constexpr byte CHANNEL_4 = 4;
-static constexpr byte CHANNEL_5 = 5;
-static constexpr byte CHANNEL_7 = 7;
+constexpr byte CHANNEL_1 = 1;
+constexpr byte CHANNEL_2 = 2;
+constexpr byte CHANNEL_3 = 3;
+constexpr byte CHANNEL_4 = 4;
+constexpr byte CHANNEL_5 = 5;
+constexpr byte CHANNEL_7 = 7;
 
 /* frame length settings. */
-static constexpr byte FRAME_LENGTH_NORMAL   = 0x00;
-static constexpr byte FRAME_LENGTH_EXTENDED = 0x03;
+constexpr byte FRAME_LENGTH_NORMAL   = 0x00;
+constexpr byte FRAME_LENGTH_EXTENDED = 0x03;
 
 /* operation modes based on chapter 9.3 of DWM1000 user manual
 The modes are SHORTRANGE, MEDIUMRANGE, LONGRANGE in both LOWPRF and HIGHPRF, the length name reference of the preamble is
 relative to the mode*/
-static constexpr byte MODE_SHORTRANGE_LOWPRF_SHORTPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_64};
-static constexpr byte MODE_SHORTRANGE_HIGHPRF_SHORTPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_64};
-static constexpr byte MODE_SHORTRANGE_LOWPRF_MEDIUMPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_128};
-static constexpr byte MODE_SHORTRANGE_HIGHPRF_MEDIUMPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_128};
-static constexpr byte MODE_SHORTRANGE_LOWPRF_LONGPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_256};
-static constexpr byte MODE_SHORTRANGE_HIGHPRF_LONGPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_256};
+constexpr byte MODE_SHORTRANGE_LOWPRF_SHORTPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_64};
+constexpr byte MODE_SHORTRANGE_HIGHPRF_SHORTPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_64};
+constexpr byte MODE_SHORTRANGE_LOWPRF_MEDIUMPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_128};
+constexpr byte MODE_SHORTRANGE_HIGHPRF_MEDIUMPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_128};
+constexpr byte MODE_SHORTRANGE_LOWPRF_LONGPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_256};
+constexpr byte MODE_SHORTRANGE_HIGHPRF_LONGPREAMBLE[] = {TRX_RATE_6800KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_256};
 
-static constexpr byte MODE_MEDIUMRANGE_LOWPRF_SHORTPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_256};
-static constexpr byte MODE_MEDIUMRANGE_HIGHPRF_SHORTPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_256};
-static constexpr byte MODE_MEDIUMRANGE_LOWPRF_MEDIUMPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_512};
-static constexpr byte MODE_MEDIUMRANGE_HIGHPRF_MEDIUMPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_512};
-static constexpr byte MODE_MEDIUMRANGE_LOWPRF_LONGPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_1024};
-static constexpr byte MODE_MEDIUMRANGE_HIGHPRF_LONGPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_1024};
+constexpr byte MODE_MEDIUMRANGE_LOWPRF_SHORTPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_256};
+constexpr byte MODE_MEDIUMRANGE_HIGHPRF_SHORTPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_256};
+constexpr byte MODE_MEDIUMRANGE_LOWPRF_MEDIUMPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_512};
+constexpr byte MODE_MEDIUMRANGE_HIGHPRF_MEDIUMPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_512};
+constexpr byte MODE_MEDIUMRANGE_LOWPRF_LONGPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_1024};
+constexpr byte MODE_MEDIUMRANGE_HIGHPRF_LONGPREAMBLE[] = {TRX_RATE_850KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_1024};
 
-static constexpr byte MODE_LONGRANGE_LOWPRF_SHORTPREAMBLE[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_2048};
-static constexpr byte MODE_LONGRANGE_HIGHPRF_SHORTPREAMBLE[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_2048};
+constexpr byte MODE_LONGRANGE_LOWPRF_SHORTPREAMBLE[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_2048};
+constexpr byte MODE_LONGRANGE_HIGHPRF_SHORTPREAMBLE[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_2048};
 /* WARNING: They do not work on some tests */
 //static constexpr byte MODE_LONGRANGE_LOWPRF_LONGPREAMBLE[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_16MHZ, TX_PREAMBLE_LEN_4096};
 //static constexpr byte MODE_LONGRANGE_HIGHPRF_LONGPREAMBLE[] = {TRX_RATE_110KBPS, TX_PULSE_FREQ_64MHZ, TX_PREAMBLE_LEN_4096};
